@@ -55,3 +55,19 @@ predict_diabetes_risk(
 
 ---
 *Developed with ❤️ by Krishna Jaiswal for INDIA.RUNS 2026.*
+
+---
+
+## 🌐 Open Source Contribution & Future Roadmap (Issues)
+This project is fully open-source, and contributions are highly welcome! If you are a beginner or an experienced developer, feel free to pick up any of the following active **Issues**:
+
+*   **[Issue #1] Data Augmentation:** Expand the dataset generation script to include 5,000+ synthetic patient profiles using advanced distributions to mimic real-world outlier cases.
+*   **[Issue #2] Feature Engineering:** Add new columns like `Age_Group` or `BMI_Category` to check if categorical bucketing increases model accuracy beyond 65%.
+*   **[Issue #3] Algorithm Comparison:** Implement Logistic Regression and Support Vector Machines (SVM) alongside Random Forest to benchmark which algorithm yields the highest accuracy.
+*   **[Issue #4] Streamlit UI Deployment:** Build a simple, frontend web interface using Streamlit so non-technical users can interact with the model via a clean web page.
+
+### 🤝 How to Contribute
+1. **Fork** this repository.
+2. Create a new branch: `git checkout -b feature/YourFeatureName`
+3. Commit your changes and open a **Pull Request (PR)** explaining your updates.
+
