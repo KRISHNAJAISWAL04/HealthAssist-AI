@@ -1,0 +1,244 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyOIjn+NHOd0dE2+/vBQhM5+",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/KRISHNAJAISWAL04/HealthAssist-AI/blob/main/health_ai\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "RAaNpbHDX6yd",
+        "outputId": "3295eb89-7d48-4eeb-af18-8fdd84575427"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "--- YOUR DATASET GENERATED SUCCESSFULLY ---\n",
+            "   Pregnancies  Glucose  BloodPressure  SkinThickness  Insulin   BMI  \\\n",
+            "0            6      132            108             30      288  29.4   \n",
+            "1            3      154             70             16      285  27.9   \n",
+            "2            4      101             80             26      222  20.8   \n",
+            "3            6      156             85             29       41  32.3   \n",
+            "4            2      102             84             29       86  23.1   \n",
+            "\n",
+            "   DiabetesPedigree  Age  Outcome  \n",
+            "0             0.180   62        0  \n",
+            "1             1.506   67        0  \n",
+            "2             1.844   50        1  \n",
+            "3             0.632   61        0  \n",
+            "4             1.731   54        0  \n"
+          ]
+        }
+      ],
+      "source": [
+        "import numpy as np\n",
+        "import pandas as pd\n",
+        "from sklearn.model_selection import train_test_split\n",
+        "from sklearn.ensemble import RandomForestClassifier\n",
+        "from sklearn.metrics import accuracy_score\n",
+        "\n",
+        "# We create our own data right here so we don't need the internet!\n",
+        "np.random.seed(42)\n",
+        "num_people = 500\n",
+        "\n",
+        "mock_data = {\n",
+        "    'Pregnancies': np.random.randint(0, 8, size=num_people),\n",
+        "    'Glucose': np.random.randint(70, 190, size=num_people),\n",
+        "    'BloodPressure': np.random.randint(60, 110, size=num_people),\n",
+        "    'SkinThickness': np.random.randint(10, 50, size=num_people),\n",
+        "    'Insulin': np.random.randint(15, 300, size=num_people),\n",
+        "    'BMI': np.random.uniform(18.5, 40.0, size=num_people).round(1),\n",
+        "    'DiabetesPedigree': np.random.uniform(0.1, 2.0, size=num_people).round(3),\n",
+        "    'Age': np.random.randint(21, 70, size=num_people),\n",
+        "    'Outcome': np.random.choice([0, 1], size=num_people, p=[0.65, 0.35])\n",
+        "}\n",
+        "\n",
+        "data = pd.DataFrame(mock_data)\n",
+        "\n",
+        "print(\"--- YOUR DATASET GENERATED SUCCESSFULLY ---\")\n",
+        "print(data.head())\n",
+        "\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# 1. Define a function that takes health inputs and tells us the AI's result\n",
+        "def predict_diabetes_risk(pregnancies, glucose, bp, skin, insulin, bmi, pedigree, age):\n",
+        "    # Format the input data just like our dataset\n",
+        "    input_data = np.array([[pregnancies, glucose, bp, skin, insulin, bmi, pedigree, age]])\n",
+        "\n",
+        "    # Scale the input data using our trained scaler\n",
+        "    input_scaled = scaler.transform(input_data)\n",
+        "\n",
+        "    # Get prediction (0 or 1)\n",
+        "    prediction = optimized_brain.predict(input_scaled)[0]\n",
+        "\n",
+        "    print(\"\\n\" + \"=\"*40)\n",
+        "    print(\"         HEALTHASSIST AI REPORT         \")\n",
+        "    print(\"=\"*40)\n",
+        "    if prediction == 1:\n",
+        "        print(\"RESULT: High Risk Detected.\")\n",
+        "        print(\"ADVICE: Please consult a physician for further screening.\")\n",
+        "    else:\n",
+        "        print(\"RESULT: Low Risk Detected.\")\n",
+        "        print(\"ADVICE: Maintain a balanced diet and regular exercise!\")\n",
+        "    print(\"=\"*40)\n",
+        "\n",
+        "# 2. TEST YOUR AI HERE: Change these numbers to test different scenarios!\n",
+        "predict_diabetes_risk(\n",
+        "    pregnancies = 2,       # Number of times pregnant (if applicable, else 0)\n",
+        "    glucose = 160,         # Blood glucose level (e.g., 70 to 190)\n",
+        "    bp = 80,               # Blood pressure (e.g., 60 to 110)\n",
+        "    skin = 25,             # Skin fold thickness\n",
+        "    insulin = 85,          # Insulin level\n",
+        "    bmi = 32.5,            # Body Mass Index (e.g., 18.5 to 40.0)\n",
+        "    pedigree = 0.5,        # Diabetes pedigree function history (e.g., 0.1 to 2.0)\n",
+        "    age = 45               # Age in years\n",
+        ")\n"
+      ],
+      "metadata": {
+        "id": "ocVZLgaAiugc",
+        "outputId": "53f679a2-187a-4756-e1d8-bb84db9479dd",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "\n",
+            "========================================\n",
+            "         HEALTHASSIST AI REPORT         \n",
+            "========================================\n",
+            "RESULT: Low Risk Detected.\n",
+            "ADVICE: Maintain a balanced diet and regular exercise!\n",
+            "========================================\n"
+          ]
+        },
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "/usr/local/lib/python3.12/dist-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but StandardScaler was fitted with feature names\n",
+            "  warnings.warn(\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# 1. Separate features (health metrics) from the target (Outcome)\n",
+        "X = data.drop(columns=['Outcome'])\n",
+        "y = data['Outcome']\n",
+        "\n",
+        "# 2. Split the data: 80% for training the AI, 20% to test if it's smart\n",
+        "# FIXED: Changed test_test_split to test_size\n",
+        "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n",
+        "\n",
+        "# 3. Create the AI brain (Random Forest Classifier) and train it\n",
+        "ai_brain = RandomForestClassifier(n_estimators=100, random_state=42)\n",
+        "ai_brain.fit(X_train, y_train)\n",
+        "\n",
+        "# 4. Test the AI on the 20% unseen data to see its score\n",
+        "predictions = ai_brain.predict(X_test)\n",
+        "score = accuracy_score(y_test, predictions)\n",
+        "\n",
+        "print(\"--- AI TRAINING COMPLETE ---\")\n",
+        "print(f\"Your AI Assistant is predicting with an Accuracy of: {score * 100:.2f}%\")\n",
+        "\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "e0A8Jj87ZJIV",
+        "outputId": "a1f1a61d-41d1-4af4-e929-5e57d05dba29"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "--- AI TRAINING COMPLETE ---\n",
+            "Your AI Assistant is predicting with an Accuracy of: 61.00%\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from sklearn.preprocessing import StandardScaler\n",
+        "\n",
+        "# 1. Normalize the scales of all our health data\n",
+        "scaler = StandardScaler()\n",
+        "X_train_scaled = scaler.fit_transform(X_train)\n",
+        "X_test_scaled = scaler.transform(X_test)\n",
+        "\n",
+        "# 2. Re-train the AI on the scaled data\n",
+        "optimized_brain = RandomForestClassifier(n_estimators=150, max_depth=10, random_state=42)\n",
+        "optimized_brain.fit(X_train_scaled, y_train)\n",
+        "\n",
+        "# 3. Check the new accuracy score\n",
+        "new_predictions = optimized_brain.predict(X_test_scaled)\n",
+        "new_score = accuracy_score(y_test, new_predictions)\n",
+        "\n",
+        "print(\"--- OPTIMIZATION COMPLETE ---\")\n",
+        "print(f\"Your Optimized AI Accuracy is: {new_score * 100:.2f}%\")\n"
+      ],
+      "metadata": {
+        "id": "1LS0xhMRZegR",
+        "outputId": "4d7d63f0-228f-4198-d56f-a310a3084327",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "--- OPTIMIZATION COMPLETE ---\n",
+            "Your Optimized AI Accuracy is: 65.00%\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
